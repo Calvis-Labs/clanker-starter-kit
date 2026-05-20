@@ -23,7 +23,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/approve-readonly.py"
+            "command": "bash -c 'if [ -x \"$CLAUDE_PROJECT_DIR/.claude/hooks/approve-readonly.py\" ]; then exec \"$CLAUDE_PROJECT_DIR/.claude/hooks/approve-readonly.py\"; elif [ -x \"$HOME/.claude/hooks/approve-readonly.py\" ]; then exec \"$HOME/.claude/hooks/approve-readonly.py\"; fi'"
           }
         ]
       }

@@ -16,16 +16,22 @@ Parse `$ARGUMENTS`:
 ## Phase 2 — Create the tracking issue
 Per the configured tracker:
 - **linear** → `mcp__linear__create_issue` (use the `linear_team_id` from config).
-- **github** → `gh issue create --title "..." --body "..."` (capture the issue number).
+- **GitHub** → `gh issue create --title "..." --body "..."` (capture the issue number).
 - **none** → no external issue; derive a short slug ID from the feature for branch naming.
 
 For a non-trivial feature, draft a proper issue (problem, approach, acceptance criteria) — delegate to the **`ticket-creator`** agent if useful. Keep the issue ID; it names the branch.
 
 ## Phase 3 — Isolated worktree
-Work on a branch in a git worktree so the user's main checkout stays untouched:
+Work on a branch in a git worktree so the user's main checkout stays untouched. **Base the new branch on the project's default branch, never on whatever branch happens to be checked out.** Resolve it in this order: `default_branch` from `.claude/project.md` → `origin/HEAD` → `main`/`master` if either exists.
 ```bash
-default_branch=$(git symbolic-ref --quiet refs/remotes/origin/HEAD 2>/dev/null | sed 's@^refs/remotes/origin/@@')
-[ -z "$default_branch" ] && default_branch=$(git rev-parse --abbrev-ref HEAD)   # fresh repo / no remote
+default_branch="<default_branch from .claude/project.md, if set>"
+if [ -z "$default_branch" ]; then
+  default_branch=$(git symbolic-ref --quiet refs/remotes/origin/HEAD 2>/dev/null | sed 's@^refs/remotes/origin/@@' || true)
+fi
+if [ -z "$default_branch" ]; then
+  # last resort: a conventional default that actually exists — NOT the current branch
+  for b in main master; do git show-ref --verify --quiet "refs/heads/$b" && default_branch="$b" && break; done
+fi
 branch="<branch_prefix><issue-id>"
 git worktree add "<worktree_dir>/$(basename "$PWD")-<issue-id>" -b "$branch" "$default_branch"
 ```

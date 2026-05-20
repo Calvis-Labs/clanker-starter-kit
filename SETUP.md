@@ -51,7 +51,7 @@ rubric, so it works on whatever you build.
 
 ## What's in the box
 
-```
+```text
 .claude/
 ├── settings.json          # permissions + the read-only auto-approve hook
 ├── project.example.md     # config template (/setup writes the real one)

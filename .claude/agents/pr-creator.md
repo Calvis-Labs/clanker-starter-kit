@@ -15,10 +15,10 @@ You open a clean pull request for the current branch. Read `.claude/project.md` 
 
 ## Workflow
 
-1. **Push if needed.** Confirm the branch exists on the remote; `git push -u origin <branch>` if not.
-2. **Determine the base branch.** Use the repo's default branch — from config, else `git symbolic-ref refs/remotes/origin/HEAD`. Never assume `main` vs another branch; detect it.
+1. **Push if needed.** Confirm the branch exists on the remote; `git push -u origin <branch>` if not. If the push is rejected (protected branch, missing permission), report exactly why and stop.
+2. **Determine the base branch.** Use the base branch handed to you by the caller. If none was passed, fall back to `pr_base` in `.claude/project.md`, then the repo's default branch (`git symbolic-ref refs/remotes/origin/HEAD`). Never assume `main` vs another branch; resolve it.
 3. **Analyze the change.** `git diff <base>...HEAD --stat` and `--name-only`. Identify the stack(s) touched.
-4. **Pre-flight checks.** Run the project's build/lint commands. Confirm no debug prints/logs remain and the change follows house patterns. Fix or flag before opening.
+4. **Pre-flight checks.** Run the project's build/lint commands. If the project has none configured, skip this step. If a check fails, show the user what failed and ask whether to open the PR anyway — never silently ship a broken build. Confirm no debug prints/logs remain and the change follows house patterns.
 5. **Write the PR.**
    - **Title:** `Feature: …` / `Fix: …` / `Refactor: …` / `Update: …` — concise, descriptive.
    - **Body:** Summary → Changes made (bulleted) → Test plan (what you ran + results) → Validation (browser/sim/integration, if done) → Breaking changes (or "none") → Notes/follow-ups. Include a stack-appropriate checklist (e.g. migrations for Django, DI wiring for mobile, query keys for React).

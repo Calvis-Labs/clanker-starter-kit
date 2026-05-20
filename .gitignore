@@ -1,3 +1,6 @@
 __pycache__/
 *.pyc
 .DS_Store
+
+# Per-project/per-machine config written by /setup (keep project.example.md tracked)
+.claude/project.md
