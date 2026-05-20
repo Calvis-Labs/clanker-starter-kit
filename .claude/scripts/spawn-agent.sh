@@ -51,8 +51,14 @@ launcher=$(mktemp "${TMPDIR:-/tmp}/clanker-agent.XXXXXX")   # X's must be last (
 chmod +x "$launcher"
 
 # --- split the current iTerm pane and run it; fall back to instructions ---
+manual_hint() {
+  echo "Open a new pane/tab yourself (⌘D in iTerm) and run:"
+  echo "   bash $launcher"
+  echo "(branch: $branch, worktree: $wt)"
+}
+
 if [ "${TERM_PROGRAM:-}" = "iTerm.app" ]; then
-  osascript <<OSA
+  if osascript <<OSA 2>/tmp/clanker-osascript.err
 tell application "iTerm2"
   tell current session of current window
     set newSession to (split vertically with same profile)
@@ -60,11 +66,20 @@ tell application "iTerm2"
   end tell
 end tell
 OSA
-  echo "✅ Spawned agent for '$feature_id' in a new pane."
-  echo "   branch:   $branch"
-  echo "   worktree: $wt"
+  then
+    echo "✅ Spawned agent for '$feature_id' in a new pane."
+    echo "   branch:   $branch"
+    echo "   worktree: $wt"
+  else
+    # Almost always the first-run automation-permission prompt was dismissed.
+    echo "⚠️  Couldn't drive iTerm automatically:"
+    sed 's/^/   /' /tmp/clanker-osascript.err
+    echo "   → macOS needs to allow iTerm to control itself. Grant it under"
+    echo "     System Settings → Privacy & Security → Automation, then retry."
+    echo
+    manual_hint
+  fi
 else
-  echo "Not inside iTerm — open a new pane/tab yourself and run:"
-  echo "   bash $launcher"
-  echo "(branch: $branch, worktree: $wt)"
+  echo "Not inside iTerm."
+  manual_hint
 fi

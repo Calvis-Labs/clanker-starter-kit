@@ -54,6 +54,18 @@ claude
 
 Now you have two agents, two branches, zero risk of collision.
 
+## First run: the automation prompt
+
+The very first time `/parallel` tries to open a pane, macOS asks whether iTerm
+may control itself. **Click OK.** If you miss it (or clicked Don't Allow), the
+split won't happen and you'll see a hint pointing you to:
+
+**System Settings → Privacy & Security → Automation → iTerm → enable iTerm**
+
+Turn it on and run `/parallel` again. Either way the worktree was still created,
+and the command prints the exact line to run by hand in a new pane (`⌘D`), so
+you're never blocked.
+
 ## A good mental model
 
 Think of each pane as a **separate workshop**. Same blueprint (your repo's
