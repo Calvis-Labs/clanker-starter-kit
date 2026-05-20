@@ -13,9 +13,9 @@ The commands and agents currently sit in **this folder's** `.claude/`. That mean
 
 Use `AskUserQuestion`:
 - **Install globally (recommended)** — copy `.claude/commands`, `.claude/agents`, `.claude/hooks`, and `.claude/settings.json` into `~/.claude/`. After this, `/plan`, `/start-ticket`, etc. work in **every** project they ever open. Best if they'll build more than one thing.
-- **Keep it local** — leave everything in this folder; they must build inside this folder (or a subfolder) for the loop to work. Simplest, fully contained.
+- **Keep it local** — copy `.claude/` (commands, agents, hooks, settings, `project.example.md`) **into the project folder you identify in Step 2**, so the loop works in that one project. Simplest and fully contained, but unavailable in their other projects.
 
-If global, copy the files (don't overwrite an existing `~/.claude/commands/<name>.md` without asking — if a name collides, tell them and skip or rename). Make `~/.claude/hooks/approve-readonly.py` executable. Confirm what landed where.
+**Order note:** a global install can happen now; a local install needs the project folder first, so do it right after Step 2. Either way, don't overwrite an existing `<name>.md` without asking (if a name collides, tell them and skip or rename), make the copied `hooks/approve-readonly.py` executable, and confirm what landed where.
 
 Record the choice as `scope:` in the project config (Step 5).
 

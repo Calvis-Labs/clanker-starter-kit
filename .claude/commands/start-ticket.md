@@ -24,7 +24,8 @@ For a non-trivial feature, draft a proper issue (problem, approach, acceptance c
 ## Phase 3 — Isolated worktree
 Work on a branch in a git worktree so the user's main checkout stays untouched:
 ```bash
-default_branch=$(git symbolic-ref --quiet refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@' || git rev-parse --abbrev-ref HEAD)
+default_branch=$(git symbolic-ref --quiet refs/remotes/origin/HEAD 2>/dev/null | sed 's@^refs/remotes/origin/@@')
+[ -z "$default_branch" ] && default_branch=$(git rev-parse --abbrev-ref HEAD)   # fresh repo / no remote
 branch="<branch_prefix><issue-id>"
 git worktree add "<worktree_dir>/$(basename "$PWD")-<issue-id>" -b "$branch" "$default_branch"
 ```
