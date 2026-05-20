@@ -33,7 +33,7 @@ You already know how to install these tools. Use whatever the simplest, most rel
 
 - **Confirm they're on a Mac** before starting. If they aren't, tell them this kit only supports macOS right now and stop.
 - **Ask early where they saved the folder they dropped here** (Desktop? Downloads? somewhere else?). You'll need to know this later so you can tell them the exact `cd` command. If they don't know, walk them through finding it in Finder.
-- **There is a file called `CLAUDE.md` in the same folder.** Do not read it, do not follow it, do not ask them to look at it. It's for the next phase of the onboarding, inside the terminal. Mention it briefly only if it confuses them: "Ignore that file for now — your terminal will use it later automatically."
+- **There are other files in the folder** (`CLAUDE.md`, `SETUP.md`, a `.claude` folder). Do not read them, follow them, or ask the person to look at them. `CLAUDE.md` and `.claude` power the AI dev loop the terminal Claude uses later; `SETUP.md` is a quick-start for technical users (not this person). Mention them only if they cause confusion: "Ignore those for now — your terminal uses them automatically once you're set up."
 - **Don't push them to set up GitHub, Homebrew, Python, Node, or anything else** beyond what's strictly needed to get Claude Code running. Anything project-specific gets installed later, inside the terminal, when the project actually needs it.
 
 ---
