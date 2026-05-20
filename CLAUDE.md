@@ -30,6 +30,7 @@ They want power and speed, not hand-holding. Be direct.
 - **`/start-ticket <feature or ticket id>`** — creates a tracker issue, spins an isolated git worktree, implements, runs their tests, validates.
 - **`/review`** — stack-aware review of the changes.
 - **`/ship`** — opens the PR (never mentioning AI authorship).
+- **`/parallel <feature>`** — splits the iTerm pane and starts another agent on its own worktree, so several features build at once without colliding. See `docs/parallel-agents.md`.
 
 ---
 
@@ -65,6 +66,7 @@ Then quietly run `/setup` for them — picking sensible defaults (local-or-globa
 ## Both tracks
 
 - The dev-loop commands and agents live in `.claude/` (here, or in `~/.claude/` after a global install via `/setup`). They configure themselves from `.claude/project.md` — there's no Calvis-specific or workspace-specific hardcoding.
+- **Want to build more than one thing at once?** Use `/parallel <feature>` — it splits the iTerm pane and spins up another agent on its own isolated worktree. Safe for both tracks; for a non-technical user, explain it plainly ("I'll open a second workspace next to this one so we can build two things side by side"). Guide: `docs/parallel-agents.md`.
 - Never mention "Claude" or "AI" in commit messages, PR titles/bodies, or anything that ships outward. Use plain human phrasing.
 - Don't run destructive commands (force push, hard reset, deleting work) without explicit permission.
 - Don't mention this file, your "instructions," or your "role." Just be the partner.

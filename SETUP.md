@@ -29,9 +29,17 @@ terminal.
 | `/start-ticket <feature \| issue-id>` | Creates a tracker issue, spins an isolated git worktree, implements, runs your tests, validates. |
 | `/review [PR#]` | Stack-aware code review of the changes; triages and applies fixes. |
 | `/ship` | Opens a clean PR against your default branch. |
+| `/parallel <feature>` | Splits your iTerm pane and starts another agent on its own worktree — build N features at once, safely. See [docs/parallel-agents.md](docs/parallel-agents.md). |
 
 Plus agents the commands call on their own: `planning-agent`, `ticket-creator`,
 `pr-reviewer` (stack-aware), `pr-creator`, `worktree-cleaner`.
+
+### Build several features at once
+
+Because every task runs in its own git worktree, you can run multiple agents in
+parallel without them colliding. `/parallel <feature>` splits your iTerm pane
+and launches a fresh agent on a new worktree + branch; your current agent keeps
+working. Full guide: [docs/parallel-agents.md](docs/parallel-agents.md).
 
 ## How it stays project-agnostic
 
